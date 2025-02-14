@@ -19,6 +19,8 @@ import Calnder from '../pages/Dashboard/Calnder.jsx';
 import ForgetPaassword from '../pages/Authentication/ForgetPaassword.jsx';
 import SetNewPassword from '../pages/Authentication/SetNewPassword.jsx';
 import UserChangePassword from '../pages/Authentication/UserChangePassword.jsx';
+import Checkuserautherzationview from "../middleware/Checkuserautherzationview.jsx"
+import store from "../store/index.js"
 const AppRoutes = () => {
 
 
@@ -27,6 +29,7 @@ const AppRoutes = () => {
     {
       path: "/",
       element: <DashboardProvider><DefaultLayout /></DashboardProvider>,
+      loader:Checkuserautherzationview(store , "canViewProjects") ,
       children:  [
        ...AdminRoutes,
        ...TaskesRoutes,
