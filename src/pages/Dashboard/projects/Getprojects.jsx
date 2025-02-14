@@ -42,7 +42,17 @@ const Getprojects = () => {
       name: "مضاف من قبل"
     },
   ];
+  const filteredData = useMemo(() => {
+    if (!data?.data?.data) return [];
 
+    return data.data.data.filter(item => {
+      if (params.searchTerm && params.field) {
+        const fieldValue = params.field.split('.').reduce((obj, key) => obj?.[key], item);
+        return fieldValue?.toLowerCase().includes(params.searchTerm.toLowerCase());
+      }
+      return true;
+    });
+  }, [data, params]);
   const columns = [
     {
       name: "اسم مشروع",
@@ -93,17 +103,7 @@ const Getprojects = () => {
     },
   ];
 
-  const filteredData = useMemo(() => {
-    if (!data?.data?.data) return [];
-
-    return data.data.data.filter(item => {
-      if (params.searchTerm && params.field) {
-        const fieldValue = params.field.split('.').reduce((obj, key) => obj?.[key], item);
-        return fieldValue?.toLowerCase().includes(params.searchTerm.toLowerCase());
-      }
-      return true;
-    });
-  }, [data, params]);
+ 
 
   if (isLoading) {
     return <Loader />;
