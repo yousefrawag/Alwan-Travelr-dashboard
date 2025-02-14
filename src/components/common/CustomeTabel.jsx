@@ -4,8 +4,8 @@ const CustomeTabel = ({ columns, data }) => {
   const customStyles = {
     headCells: {
       style: {
-        backgroundColor: "#EFEEF4", // Light gray background for the header
-        color: "#333", // Darker text for better readability
+        backgroundColor: "#1a222c", // Light gray background for the header
+        color: "#ffffff", // Darker text for better readability
         fontWeight: "bold", // Bold text for the header
         fontSize: "16px", // Larger font size for header cells
       },
@@ -13,13 +13,15 @@ const CustomeTabel = ({ columns, data }) => {
     rows: {
       style: {
         fontSize: "14px", // Font size for rows
+        backgroundColor: "#24303f",
+        color: "#ffffff", // Darker text for better readability
       },
     },
   };
 
   return (
     <>
-      <div className="p-4 space-y-4 rounded-md">
+      <div className="p-4 space-y-4  rounded-md shadow-xl bg-[#24303f]">
         <div>
           <DataTable
             columns={columns}

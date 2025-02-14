@@ -1,17 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ClickOutside from '../ClickOutside';
+import useQuerygetSpacficIteam from '../../../services/QuerygetSpacficIteam';
+import { useSelector } from 'react-redux';
+import { formatDistanceToNow } from 'date-fns';
 
 const DropdownNotification = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [notifying, setNotifying] = useState(true);
-
+  const [notifying, setNotifying] = useState(false);
+  const user = useSelector((state) => state.userState.userinfo)
+  const {data , isLoading} = useQuerygetSpacficIteam("notifications" , "notifications" ,user?._id )
+  const notifications = data?.notifications
+ useEffect(() => {
+if(notifications?.length > 0){
+setNotifying(true)
+}else{
+  setNotifying(false)
+}
+ } , [notifications]) 
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
       <li>
         <Link
           onClick={() => {
-            setNotifying(false);
+          
             setDropdownOpen(!dropdownOpen);
           }}
           to="#"
@@ -42,78 +54,44 @@ const DropdownNotification = () => {
 
         {dropdownOpen && (
           <div
-            className={`absolute -right-27 mt-2.5 flex h-90 w-75 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark sm:right-0 sm:w-80`}
+          className="absolute inset-0 translate-x-60 lg:translate-x-30 mt-15 flex h-90 w-80 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
           >
             <div className="px-4.5 py-3">
               <h5 className="text-sm font-medium text-bodydark2">
-                Notification
+                الإشعارات
               </h5>
             </div>
 
             <ul className="flex h-auto flex-col overflow-y-auto">
-              <li>
-                <Link
-                  className="flex flex-col gap-2.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-                  to="#"
-                >
-                  <p className="text-sm">
-                    <span className="text-black dark:text-white">
-                      Edit your information in a swipe
-                    </span>{' '}
-                    Sint occaecat cupidatat non proident, sunt in culpa qui
-                    officia deserunt mollit anim.
-                  </p>
+              {
+                data?.notifications?.map((item) => {
+                  return (
+                    <li key={item?._id}>
+                    <Link
+                      className="flex flex-col gap-2.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
+                      to={`/team-chat/${item?.chatID?.missionID?._id}/${item?.chatID?._id}`}
+                    >
+                      <p className="text-sm">
+                        <span className="text-main font-bold">
+                          {
+                            item?.chatID?.missionID?.title
+                          }
+                        </span>{' '}
+                     {
+                      item?.message
+                     }
+                      </p>
+    
+                      {item?.createdAt ? formatDistanceToNow(new Date(item?.createdAt), { addSuffix: true }) : "N/A"}
 
-                  <p className="text-xs">12 May, 2025</p>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="flex flex-col gap-2.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-                  to="#"
-                >
-                  <p className="text-sm">
-                    <span className="text-black dark:text-white">
-                      It is a long established fact
-                    </span>{' '}
-                    that a reader will be distracted by the readable.
-                  </p>
-
-                  <p className="text-xs">24 Feb, 2025</p>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="flex flex-col gap-2.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-                  to="#"
-                >
-                  <p className="text-sm">
-                    <span className="text-black dark:text-white">
-                      There are many variations
-                    </span>{' '}
-                    of passages of Lorem Ipsum available, but the majority have
-                    suffered
-                  </p>
-
-                  <p className="text-xs">04 Jan, 2025</p>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="flex flex-col gap-2.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-                  to="#"
-                >
-                  <p className="text-sm">
-                    <span className="text-black dark:text-white">
-                      There are many variations
-                    </span>{' '}
-                    of passages of Lorem Ipsum available, but the majority have
-                    suffered
-                  </p>
-
-                  <p className="text-xs">01 Dec, 2024</p>
-                </Link>
-              </li>
+                    </Link>
+                  </li>
+                  )
+                })
+              }
+             
+             
+           
             </ul>
           </div>
         )}

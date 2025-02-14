@@ -5,7 +5,7 @@ const useQueryupdate = (endpoint  , key ) => {
     const queryClient = useQueryClient();
     const {isError , mutate:updateiteam , isLoading  ,isPending , data} = useMutation({
         mutationFn: async ({data , id}) => {
-            console.log(id , data);
+            console.log("from query" , id , data);
             await authFetch.put(`/${endpoint}/${id}` , data)},
         onSuccess:(response) => {
             queryClient.invalidateQueries({queryKey:[`${key}`]})

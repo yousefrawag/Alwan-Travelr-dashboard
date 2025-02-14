@@ -12,6 +12,7 @@ authFetch.interceptors.request.use((request) => {
       const token = JSON.parse(localStorage.getItem('token')) || "" ;
     request.withCredentials = true
     request.headers.Authorization = `Bearer ${token}`
+    console.log("request send8")
     return request
 } , (error) => {
     console.log(error);
@@ -26,7 +27,7 @@ authFetch.interceptors.response.use((respones) => {
         localStorage.clear()
       
         setTimeout(() => {
-          window.location.href = "/login";
+          window.location.href = "/auth/signin";
         }, 2000)}
     
     return Promise.reject(error)
