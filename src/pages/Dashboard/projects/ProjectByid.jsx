@@ -10,6 +10,7 @@ import HeadPagestyle from '../../../components/common/HeadPagestyle';
 import Loader from '../../../components/common/Loader';
 import useQuerygetSpacficIteam from '../../../services/QuerygetSpacficIteam';
 import { useParams } from 'react-router-dom';
+import { format } from 'date-fns';
 
 const ProjectByid = () => {
   const {id} =  useParams()
@@ -20,14 +21,14 @@ const ProjectByid = () => {
   }
   return (
     <div className='w-full h-full'>
-        <HeadPagestyle pageName="بيانات المشروع" to="/projects-main" title="عوده" />
+        <HeadPagestyle pageName="بيانات الخدمة" to="/projects-main" title="عوده" />
    <div className='w-full h-full grid grid-cols-1 gap-2 xl:grid-cols-2	 shadow-md p-5	'>
                <div className="mb-6 flex flex-col  gap-2">
                  <span
                    htmlFor="name"
                    className="w-full text-lg font-medium text-gray-700 dark:text-white"
                  >
-                        إسم المشروع
+                        إسم الخدمة
                  </span>
                  <p className=" dark:border-form-strokedark dark:bg-form-input  text-main p-3 w-full  outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500"
                 
@@ -44,12 +45,26 @@ const ProjectByid = () => {
                    htmlFor="name"
                    className="w-full text-lg font-medium text-gray-700 dark:text-white"
                  >
-                  حاله المشروع
+                  حاله الخدمة
                  </span>
                  <p className=" dark:border-form-strokedark dark:bg-form-input  text-main p-3 w-full  outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500"
                 
                 >
                  {Currentitem?.projectSatatus}
+                </p>
+              
+               </div>
+               <div className="mb-6 flex flex-col  gap-2">
+                 <span
+                   htmlFor="name"
+                   className="w-full text-lg font-medium text-gray-700 dark:text-white"
+                 >
+                  تاريخ الموعد
+                 </span>
+                 <p className=" dark:border-form-strokedark dark:bg-form-input  text-main p-3 w-full  outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500"
+                
+                >
+                 {format(new Date(Currentitem.meetingDate), "dd MMMM, yyyy") || "غير محدد"  }
                 </p>
               
                </div>
@@ -74,12 +89,12 @@ const ProjectByid = () => {
                    htmlFor="name"
                    className="w-full text-lg font-medium text-gray-700 dark:text-white"
                  >
-                 إسم العائلة
+               البريد الالكترونى
                  </span>
                  <p className=" dark:border-form-strokedark dark:bg-form-input  text-main p-3 w-full  outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500"
                 
                 >
-                      {Currentitem?.customers?.secoundName}
+                      {Currentitem?.customers?.email || ""}
                 </p>
               
                </div>

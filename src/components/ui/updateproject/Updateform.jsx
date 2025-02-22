@@ -12,8 +12,10 @@ import useQueryupdate from '../../../services/useQueryupdate';
 import Loader from '../../common/Loader';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import useQuerygetiteams from '../../../services/Querygetiteams';
 const Updateform = ({id}) => {
   const {data , isLoading} = useQuerygetSpacficIteam("projects" , "projects" , id)
+  const {data:Sections} = useQuerygetiteams("Section" , "Section")
   const {isLoading:SubmitLoading , updateiteam } = useQueryupdate("projects" , "projects")
   const CurrentProject = data?.data
   const navigate = useNavigate()
@@ -22,6 +24,7 @@ const Updateform = ({id}) => {
       const [Selectedsection , setselectedsection] = useState("")
       const [Selectedstatuts , setselectedStatuts] = useState("")
       const [docs , setDocs] = useState([])
+       const [Section , setSection] = useState("")
       const [viewmenu , setViewmenu] = useState(false)
 
       const handleFileChange = (e) => {
@@ -52,7 +55,7 @@ const Updateform = ({id}) => {
             return ;
         }
     
-      if(!data.Section){
+      if(!data.section){
         toast.error("يجب إضافه  القسم التابع له")
         return ;
       }
@@ -73,7 +76,7 @@ const Updateform = ({id}) => {
                     e.target.reset()
                     setDocs([])
                     setimages_video([])
-                    toast.success("تم إضافه مشروع جديد")
+                    toast.success("تم تعديل مشروع بنجاح")
                     navigate("/projects-main")
                 },  
                  onError: (error) => {
@@ -96,6 +99,7 @@ const Updateform = ({id}) => {
     setSelectedCustomer(CurrentProject?.customers?._id)
     setselectedsection(CurrentProject?.Section)
     setselectedStatuts(CurrentProject?.projectSatatus)
+    setSection(CurrentProject?.section?._id)
   }
  } , [CurrentProject])
 if(isLoading || SubmitLoading) {
@@ -116,7 +120,7 @@ if(isLoading || SubmitLoading) {
                             htmlFor="name"
                             className="w-full text-lg font-medium text-black dark:text-white"
                         >
-                            إسم المشروع
+                            إسم الخدمة
                         </label>
                         <input
                             type="text"
@@ -127,13 +131,31 @@ if(isLoading || SubmitLoading) {
                         />
                     
             </div>
+            <div className="mb-6 flex flex-col gap-2">
+                    <label htmlFor="deadline" className="w-full text-lg font-medium text-black dark:text-white">
+                        إختار القسم
+                    </label>
+                  <select 
+                  name='section' 
+                  value={Section}
+                  onChange={(e) => setSection(e.target.value)}
+                  className="mb-2 focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary text-main p-3 w-full outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500"
+                  >
+                    <option value="">قم بالاختيار</option>
+                    {
+                        Sections?.data?.map((item) => {
+                            return <option key={item?._id} value={item?._id}>{item?.name}</option>
+                        })
+                    }
+                  </select>
+                </div>
            
                 <div className="mb-6 flex flex-col  gap-2">
                         <label
                             htmlFor="projectSatatus"
                             className="w-full text-lg font-medium text-black dark:text-white"
                         >
-                          حالة المشروع
+                          حالة الخدمة
                         </label>
                         <select value={Selectedstatuts} onChange={(e) => setselectedStatuts(e.target.value)} name="projectSatatus" id="projectSatatus"  className="focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary text-main p-3 w-full  outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500"                        >
                         <option value="">
@@ -153,13 +175,28 @@ if(isLoading || SubmitLoading) {
                     
                 </div>
                 <SelectoptionHook fectParentKEY ="customers" keyName="customers" title ="أختر العميل" value ={SelectedCustomer} setvalue ={setSelectedCustomer} />
-
+                <div className="mb-6 flex flex-col  gap-2">
+                        <label
+                            htmlFor="date"
+                            className="w-full text-lg font-medium text-black dark:text-white"
+                        >
+                           تاريخ الموعد
+                        </label>
+                        <input
+                            type="date"
+                            id="meetingData"
+                            name="meetingDate"
+                            defaultValue={CurrentProject?.meetingDate}
+                            className="focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary text-main p-3 w-full  outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500"
+                        />
+                    
+            </div>
                 <div className="mb-6 flex flex-col  gap-2">
                         <label
                             htmlFor="notes"
                             className="w-full text-lg font-medium text-black dark:text-white"
                         >
-                           ملاحظات المشروع
+                           ملاحظات الخدمة
                         </label>
                         <textarea name='notes' defaultValue={CurrentProject?.notes} className="focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary text-main p-3 w-full  outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500" >
 

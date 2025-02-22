@@ -1,40 +1,56 @@
+import { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 
 const CustomeTabel = ({ columns, data }) => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    // دالة للتحقق من وضع الدارك مود
+    const checkDarkMode = () => {
+      setIsDarkMode(document.body.classList.contains("dark"));
+    };
+
+    // تشغيل الدالة مرة عند التحميل
+    checkDarkMode();
+
+    // مراقبة تغييرات الـ class في body
+    const observer = new MutationObserver(checkDarkMode);
+    observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+
+    return () => observer.disconnect();
+  }, []);
+
   const customStyles = {
     headCells: {
       style: {
-        backgroundColor: "#1a222c", // Light gray background for the header
-        color: "#ffffff", // Darker text for better readability
-        fontWeight: "bold", // Bold text for the header
-        fontSize: "16px", // Larger font size for header cells
+        backgroundColor: isDarkMode ? "#1A222C" : "#F1F5F9",
+        color: "#79818F",
+        fontSize: "18px",
+        fontWeight: "normal",
+        border: "none"
       },
     },
     rows: {
       style: {
-        fontSize: "14px", // Font size for rows
-        backgroundColor: "#24303f",
-        color: "#ffffff", // Darker text for better readability
+        fontSize: "14px",
+        color: isDarkMode ? "#ccc" : "#000",
+        backgroundColor: isDarkMode ? "#202938" : "#FFF",
       },
     },
   };
 
   return (
-    <>
-      <div className="p-4 space-y-4  rounded-md shadow-xl bg-[#24303f]">
-        <div>
-          <DataTable
-            columns={columns}
-            data={data}
-            selectableRows
-            fixedHeader
-            pagination
-            customStyles={customStyles} // Apply custom styles here
-            className="bg-blue-50 rounded-lg text-sm text-gray-700 border-none"
-          />
-        </div>
-      </div>
-    </>
+    <div className="p-4 space-y-4 rounded-md bg-[#fff] dark:bg-boxdark">
+      <DataTable
+        columns={columns}
+        data={data}
+        selectableRows
+        fixedHeader
+        pagination
+        customStyles={customStyles}
+        className="rounded-lg text-sm text-gray-700 border-none"
+      />
+    </div>
   );
 };
 

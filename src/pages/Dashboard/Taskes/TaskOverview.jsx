@@ -18,20 +18,7 @@ const TaskOverview = () => {
     <div className='w-full h-full'>
     <HeadPagestyle pageName="بيانات المهمة" to="/Taskes" title="عوده" />
 <div className='w-full h-full grid grid-cols-1 gap-2 xl:grid-cols-2	 shadow-md p-5	'>
-           <div className="mb-6 flex flex-col  gap-2">
-             <span
-               htmlFor="name"
-               className="w-full text-lg font-medium text-gray-700 dark:text-white"
-             >
-                   عنوان المهمة
-             </span>
-             <p className=" dark:border-form-strokedark dark:bg-form-input  text-main p-3 w-full  outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500"
-            
-            >
-              {Currentitem?.title}
-            </p>
-          
-           </div>
+         
         
           
            <div className="mb-6 flex flex-col  gap-2">
@@ -39,7 +26,7 @@ const TaskOverview = () => {
                htmlFor="name"
                className="w-full text-lg font-medium text-gray-700 dark:text-white"
              >
-             نوع المشروع
+             نوع الخدمة
              </span>
              <p className=" dark:border-form-strokedark dark:bg-form-input  text-main p-3 w-full  outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500"
             
@@ -48,15 +35,16 @@ const TaskOverview = () => {
             </p>
           
            </div>
+       
            {
-            Currentitem?.missionType === "مشروع عام"  ? (
+            Currentitem?.missionType === "خدمة عامة"  ? (
     <>
        <div className="mb-6 flex flex-col  gap-2">
                 <span
                   htmlFor="name"
                   className="w-full text-lg font-medium text-gray-700 dark:text-white"
                 >
-                المشروع
+                الخدمة
                 </span>
                 <p className=" dark:border-form-strokedark dark:bg-form-input  text-main p-3 w-full  outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500"
                
@@ -65,17 +53,18 @@ const TaskOverview = () => {
                </p>
              
               </div>
+             
               <div className="mb-6 flex flex-col  gap-2">
              <span
                htmlFor="name"
                className="w-full text-lg font-medium text-gray-700 dark:text-white"
              >
-              قسم المشروع
+           قسم الخدمة
              </span>
              <p className=" dark:border-form-strokedark dark:bg-form-input  text-main p-3 w-full  outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500"
             
             >
-             {Currentitem?.project?.Section}
+               {Currentitem?.project?.section?.name}
             </p>
           
            </div>
@@ -95,19 +84,21 @@ const TaskOverview = () => {
              
               </div>
               <div className="mb-6 flex flex-col  gap-2">
-                <span
-                  htmlFor="name"
-                  className="w-full text-lg font-medium text-gray-700 dark:text-white"
-                >
-                إسم العائلة
-                </span>
-                <p className=" dark:border-form-strokedark dark:bg-form-input  text-main p-3 w-full  outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500"
-               
-               >
-                     {Currentitem?.project?.customers?.secoundName}
-               </p>
-             
-              </div>
+         
+         <span
+           htmlFor="name"
+           className="w-full text-lg font-medium text-gray-700 dark:text-white"
+         >
+         البريد الالكترونى
+         </span>
+         <p className=" dark:border-form-strokedark dark:bg-form-input  text-main p-3 w-full  outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500"
+        
+        >
+              {Currentitem?.project?.customers?.email}
+        </p>
+      
+       </div>
+          
               <div className="mb-6 flex flex-col  gap-2">
                 <span
                   htmlFor="name"

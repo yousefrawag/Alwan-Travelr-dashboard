@@ -27,10 +27,7 @@ const GetTaskes = () => {
       });
     
       const filters = [
-        {
-          value: "title",
-          name: "عنوان المهمة "
-        },
+     
         {
           value: "missionType",
           name: " نوع المشروع"
@@ -52,10 +49,7 @@ const GetTaskes = () => {
           value: "Privetproject.name",
           name: "مشروع خاص"
         },
-        {
-          value: "section",
-          name: "القسم"
-        },
+      
       ];
 
 
@@ -75,22 +69,26 @@ const GetTaskes = () => {
 
 
     const columns = [
-        {
-          name: "عنوان المهمة",
-          selector: (row) => row.title,
-          cell: (row) => <div   
-          style={{
-           
-           whiteSpace: "wrap",
-        
-    
-         }}
-        >{ row.title}</div>,
-    
-        },
+      {
+        name: "نوع الخدمة",
+        selector: (row) => row?.missionType ,
+      },
+      {
+        name: "الخدمة",
+        selector: (row) =>  row?.missionType === "خدمة عامة" ? row?.project?.name : row?.Privetproject?.name,
+        cell: (row) => <div   
+        style={{
+         
+         whiteSpace: "wrap",
+      
+  
+       }}
+       >{ row?.missionType === "خدمة عامة" ? row?.project?.name : row?.Privetproject?.name}</div>,
+      },
+
         {
           name: "القسم",
-          selector: (row) => row.section?.name,
+          selector: (row) => row.project?.section?.name ,
           cell: (row) => <div   
           style={{
            
@@ -98,25 +96,10 @@ const GetTaskes = () => {
         
     
          }}
-        >{ row.section?.name}</div>,
+        >{  row.project?.section?.name || "خدمه مخصصة"}</div>,
     
         },
-        {
-          name: "نوع المشروع",
-          selector: (row) => row?.missionType ,
-        },
-        {
-          name: "المشروع",
-          selector: (row) =>  row?.missionType === "مشروع عام" ? row?.project?.name : row?.Privetproject?.name,
-          cell: (row) => <div   
-          style={{
-           
-           whiteSpace: "wrap",
-        
     
-         }}
-         >{ row?.missionType === "مشروع عام" ? row?.project?.name : row?.Privetproject?.name}</div>,
-        },
    
         {
           name: "مضافه من قبل",

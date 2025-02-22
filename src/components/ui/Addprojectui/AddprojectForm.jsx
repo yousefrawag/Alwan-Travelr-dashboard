@@ -10,12 +10,17 @@ import SelectoptionHook from '../../../hooks/SelectoptionHook';
 import useQueryadditeam from '../../../services/Queryadditeam';
 import Loader from '../../common/Loader';
 import toast from 'react-hot-toast';
+import useQuerygetiteams from '../../../services/Querygetiteams';
 const AddprojectForm = () => {
+  const {data:Sections} = useQuerygetiteams("Section" , "Section")
+
   const [images_video , setimages_video] = useState([])
   const [docs , setDocs] = useState([])
   const [viewmenu , setViewmenu] = useState(false)
   const [SelectedCustomer , setSelectedCustomer] = useState("")
   const {addIteam , isLoading} = useQueryadditeam("projects" , "projects")
+  const [Section , setSection] = useState("")
+
   const navigate = useNavigate()
   const handleFileChange = (e) => {
     const selectedFiles = Array.from(e.target.files);
@@ -39,13 +44,13 @@ const AddprojectForm = () => {
           formData.append("files" , item)
         })
     if(!data.name){
-      toast.error("يجب إضافه اسم المشروع")
+      toast.error("يجب إضافه اسم الخدمة")
         return ;
     }
 
 
   if(!data.projectSatatus){
-  toast.error("يجب إضافه  حالة المشروع")
+  toast.error("يجب إضافه  حالة الخدمة")
   return ;
   }
   if(!data.customers){
@@ -61,7 +66,7 @@ const AddprojectForm = () => {
                 e.target.reset()
                 setDocs([])
                 setimages_video([])
-                toast.success("تم إضافه مشروع جديد")
+                toast.success("تم إضافه خدمة جديد")
                 navigate("/projects-main")
             },  
              onError: (error) => {
@@ -86,7 +91,7 @@ const AddprojectForm = () => {
       <div className="icon p-2 bg-main rounded-full">
         <FaRegPenToSquare />
       </div>
-      <p className="font-semibold text-lg">ادخل بيانات المشروع</p>
+      <p className="font-semibold text-lg">ادخل بيانات الخدمة</p>
     </div>
    
    <div className='main-section w-full max-h-[400px] min-h-[100px] p-4 overflow-auto	'>
@@ -95,7 +100,7 @@ const AddprojectForm = () => {
                             htmlFor="name"
                             className="w-full text-lg font-medium text-black dark:text-white"
                         >
-                            إسم المشروع
+                            إسم الخدمة
                         </label>
                         <input
                             type="text"
@@ -112,7 +117,7 @@ const AddprojectForm = () => {
                             htmlFor="projectSatatus"
                             className="w-full text-lg font-medium text-black dark:text-white"
                         >
-                          حالة المشروع
+                          حالة الخدمة
                         </label>
                         <select name="projectSatatus" id="projectSatatus"  className="focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary text-main p-3 w-full  outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500"                        >
                         <option value="">
@@ -132,13 +137,48 @@ const AddprojectForm = () => {
                      
                     
                 </div>
+                <div className="mb-6 flex flex-col gap-2">
+                    <label htmlFor="deadline" className="w-full text-lg font-medium text-black dark:text-white">
+                        إختار القسم
+                    </label>
+                  <select 
+                  name='section' 
+                  value={Section}
+                  onChange={(e) => setSection(e.target.value)}
+                  className="mb-2 focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary text-main p-3 w-full outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500"
+                  >
+                    <option value="">قم بالاختيار</option>
+                    {
+                        Sections?.data?.map((item) => {
+                            return <option key={item?._id} value={item?._id}>{item?.name}</option>
+                        })
+                    }
+                  </select>
+                </div>
               <SelectoptionHook fectParentKEY ="customers" keyName="customers" title ="أختر العميل" value ={SelectedCustomer} setvalue ={setSelectedCustomer} />
+               
+              <div className="mb-6 flex flex-col  gap-2">
+                        <label
+                            htmlFor="date"
+                            className="w-full text-lg font-medium text-black dark:text-white"
+                        >
+                           تاريخ الموعد
+                        </label>
+                        <input
+                            type="date"
+                            id="meetingData"
+                            name="meetingDate"
+                    
+                            className="focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary text-main p-3 w-full  outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500"
+                        />
+                    
+            </div>
                 <div className="mb-6 flex flex-col  gap-2">
                         <label
                             htmlFor="notes"
                             className="w-full text-lg font-medium text-black dark:text-white"
                         >
-                           ملاحظات المشروع
+                           ملاحظات الخدمة
                         </label>
                         <textarea name='notes'  className="focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary text-main p-3 w-full  outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500" >
 

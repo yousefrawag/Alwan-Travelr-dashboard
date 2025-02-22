@@ -8,6 +8,9 @@ import toast from 'react-hot-toast';
 import Loader from "../../../components/common/Loader/index"
 const AddCustomer = () => {
   const {isError , isLoading , addIteam} = useQueryadditeam("customers" , "customers")
+  const [totalPrices , setTotal] = useState("")
+  const [Arrievcashe , setArrievCashe] = useState("")
+ const inprocessCashe  = (totalPrices && Arrievcashe) ? totalPrices - Arrievcashe : 0
   const navigate = useNavigate()
     const Customertype = ["فرد", "عائلة"]
     const [selectedType , setSelectedType] = useState("فرد")
@@ -22,10 +25,7 @@ const AddCustomer = () => {
     toast.error("يجب إضافه اسم العميل")
       return ;
   }
-  if(!data.secoundName){
-    toast.error("يجب إضافه  إسم العائلة")
-    return ;
-}
+
   if(!data.phoneNumber){
     toast.error("يجب إضافه الجوال")
     return ;
@@ -80,7 +80,7 @@ return ;
                             htmlFor="name"
                             className="w-full text-lg font-medium text-black dark:text-white"
                         >
-                            الإسم الإول
+                            الإسم كامل
                         </label>
                         <input
                             type="text"
@@ -93,20 +93,21 @@ return ;
             </div>
             <div className="mb-6 flex flex-col  gap-2">
                         <label
-                            htmlFor="secoundName"
+                            htmlFor="email"
                             className="w-full text-lg font-medium text-black dark:text-white"
                         >
-                           إسم العائلة
+                          البريد الالكترونى
                         </label>
                         <input
-                            type="text"
-                            id="secoundName"
-                            name="secoundName"
+                            type="email"
+                            id="email"
+                            name="email"
                     
                             className="focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary text-main p-3 w-full  outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500"
                         />
                     
             </div>
+          
             <div className="mb-6 flex flex-col  gap-2">
                         <label
                             htmlFor="phoneNumber"
@@ -184,10 +185,11 @@ return ;
                          إجمالى المبلغ
                         </label>
                         <input
-                            type="text"
+                            type="number"
                             id="total"
                             name="total"
-                    
+                            value={totalPrices}
+                            onChange={(e) => setTotal(e.target.value)}
                             className="focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary text-main p-3 w-full  outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500"
                         />
                     
@@ -225,10 +227,11 @@ return ;
                          مبلغ واصل
                         </label>
                         <input
-                            type="text"
+                            type="number"
                             id="Arrievcashe"
                             name="Arrievcashe"
-                    
+                            value={Arrievcashe}
+                            onChange={(e) => setArrievCashe(e.target.value)}
                             className="focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary text-main p-3 w-full  outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500"
                         />
                     
@@ -241,10 +244,10 @@ return ;
                          مبلغ متبقى
                         </label>
                         <input
-                            type="text"
+                            type="number"
                             id="inprocessCashe"
                             name="inprocessCashe"
-                    
+                            value={inprocessCashe}
                             className="focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary text-main p-3 w-full  outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500"
                         />
                     

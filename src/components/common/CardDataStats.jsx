@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const CardDataStats = ({
   title,
   total,
@@ -5,9 +7,10 @@ const CardDataStats = ({
   levelUp,
   levelDown,
   children,
+  to
 }) => {
   return (
-    <div className="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
+    <Link to={to} className="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
      <div  className="flex justify-between items-center">
      <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4">
         {children}
@@ -58,7 +61,7 @@ const CardDataStats = ({
           )}
         </span>
       </div>
-    </div>
+    </Link>
   );
 };
 

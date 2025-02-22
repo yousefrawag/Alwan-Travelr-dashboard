@@ -1,7 +1,7 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import HeadPagestyle from '../../../components/common/HeadPagestyle';
 import CustomeTabel from '../../../components/common/CustomeTabel';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { GrFormView } from "react-icons/gr";
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { MdOutlineEditNote } from 'react-icons/md';
@@ -12,25 +12,27 @@ import Loader from '../../../components/common/Loader';
 import useQueryDelete from '../../../services/useQueryDelete';
 import FiltertionHook from "../../../hooks/FiltertionHook";
 
-const Getprojects = () => {
+const SectionClients = () => {
+    const {section} = useParams()
   const { data, isLoading } = useQuerygetiteams("projects", "projects");
   const { deleteIteam } = useQueryDelete("projects", "projects");
-  const { CanAdd, CanDelte, CanEdit, CanView, isAdmin } = useGetUserAuthentications("Projects");
+  const { CanAdd, CanDelte, CanEdit, CanView, isAdmin } = useGetUserAuthentications("Clients");
+  const [Clients , setClients] = useState([])
   const [params, setParams] = useState({
     field: "",
     searchTerm: "",
     startDate: "",
     endDate: "",
   });
-
+useEffect(() => {
+    if(data?.data?.data) {
+        setClients(data?.data?.data?.filter((item) => item.section?._id === section))
+    }
+} , [section , data])
   const filters = [
     {
       value: "name",
       name: "إسم الخدمة"
-    },
-    {
-      value: "section.name",
-      name: "القسم"
     },
  
     {
@@ -47,16 +49,16 @@ const Getprojects = () => {
     },
   ];
   const filteredData = useMemo(() => {
-    if (!data?.data?.data) return [];
+    if (!Clients) return [];
 
-    return data.data.data.filter(item => {
+    return Clients?.filter(item => {
       if (params.searchTerm && params.field) {
         const fieldValue = params.field.split('.').reduce((obj, key) => obj?.[key], item);
         return fieldValue?.toLowerCase().includes(params.searchTerm.toLowerCase());
       }
       return true;
     });
-  }, [data, params]);
+  }, [Clients, params]);
   const columns = [
     {
       name: "اسم خدمة",
@@ -64,10 +66,11 @@ const Getprojects = () => {
       cell: (row) => <div style={{ whiteSpace: "wrap" }} title={row.title}>{row.name}</div>,
     },
     {
-      name: "القسم",
-      selector: (row) => row.section?.name,
-      cell: (row) => <div style={{ whiteSpace: "wrap" }} >{row.section?.name}</div>,
-    },
+        name: "القسم",
+        selector: (row) => row.section?.name,
+        cell: (row) => <div style={{ whiteSpace: "wrap" }} >{row.section?.name}</div>,
+      },
+  
     {
       name: "العميل",
       selector: (row) => row.customers?.name,
@@ -131,4 +134,4 @@ const Getprojects = () => {
   );
 };
 
-export default Getprojects;
+export default SectionClients;

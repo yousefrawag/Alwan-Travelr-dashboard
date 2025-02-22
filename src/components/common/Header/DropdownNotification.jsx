@@ -4,28 +4,67 @@ import ClickOutside from '../ClickOutside';
 import useQuerygetSpacficIteam from '../../../services/QuerygetSpacficIteam';
 import { useSelector } from 'react-redux';
 import { formatDistanceToNow } from 'date-fns';
-
+import authFetch from '../../../utils/axiosAuthfetch';
+// import { markNotificationAsRead } from '../../../services/notificationService'; // Import the service to mark notifications as read
 const DropdownNotification = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [notifying, setNotifying] = useState(false);
-  const user = useSelector((state) => state.userState.userinfo)
-  const {data , isLoading} = useQuerygetSpacficIteam("notifications" , "notifications" ,user?._id )
-  const notifications = data?.notifications
- useEffect(() => {
-if(notifications?.length > 0){
-setNotifying(true)
-}else{
-  setNotifying(false)
-}
- } , [notifications]) 
+  const user = useSelector((state) => state.userState.userinfo);
+  const { data, isLoading } = useQuerygetSpacficIteam("notifications", "notifications", user?._id);
+  const notifications = data?.notifications;
+
+  useEffect(() => {
+    if (notifications?.length > 0) {
+      setNotifying(true);
+    } else {
+      setNotifying(false);
+    }
+  }, [notifications]);
+
+  // Merge all notifications into a single array and sort by `createdAt`
+  const sortedNotifications = notifications
+    ?.slice() // Create a copy of the array to avoid mutating the original
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)); // Sort by `createdAt` in descending order
+
+  const renderNotification = (notify) => {
+    switch (notify.type) {
+      case "add":
+      case "update":
+      case "delete":
+      case "message":
+        return (
+          <div
+            key={notify._id}
+            className="flex flex-col gap-2.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
+          >
+            <div className='w-full flex flex-col gap-3 items-center'>
+              <div className='w-full flex gap-3'>
+                <img src={notify?.employee?.imageURL} alt={notify?.employee?.name} className='w-10 h-10 rounded-full' />
+                {notify?.employee?.name}
+              </div>
+              <p className="text-sm text-main font-bold">
+                <span className="text-main font-bold">
+                  {notify.levels === "projects" ? "خدمات عامة" : notify.levels === "clients" ? "عملاء" : "مهامى"}
+                </span>{' '}
+                {notify?.message}
+              </p>
+              <span>
+                {notify?.allowed?.name || notify?.allowed?.project?.name || notify?.allowed?.Privetproject?.name}
+              </span>
+            </div>
+            {notify?.createdAt ? formatDistanceToNow(new Date(notify?.createdAt), { addSuffix: true }) : "N/A"}
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
       <li>
         <Link
-          onClick={() => {
-          
-            setDropdownOpen(!dropdownOpen);
-          }}
+          onClick={() => setDropdownOpen(!dropdownOpen)}
           to="#"
           className="relative flex h-8.5 w-8.5 items-center justify-center rounded-full border-[0.5px] border-stroke bg-gray hover:text-primary dark:border-strokedark dark:bg-meta-4 dark:text-white"
         >
@@ -53,45 +92,13 @@ setNotifying(true)
         </Link>
 
         {dropdownOpen && (
-          <div
-          className="absolute inset-0 translate-x-60 lg:translate-x-30 mt-15 flex h-90 w-80 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
-          >
+          <div className="absolute inset-0 translate-x-60 lg:translate-x-30 mt-15 flex h-90 w-80 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="px-4.5 py-3">
-              <h5 className="text-sm font-medium text-bodydark2">
-                الإشعارات
-              </h5>
+              <h5 className="text-sm font-medium text-bodydark2">الإشعارات</h5>
             </div>
 
             <ul className="flex h-auto flex-col overflow-y-auto">
-              {
-                data?.notifications?.map((item) => {
-                  return (
-                    <li key={item?._id}>
-                    <Link
-                      className="flex flex-col gap-2.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-                      to={`/team-chat/${item?.chatID?.missionID?._id}/${item?.chatID?._id}`}
-                    >
-                      <p className="text-sm">
-                        <span className="text-main font-bold">
-                          {
-                            item?.chatID?.missionID?.title
-                          }
-                        </span>{' '}
-                     {
-                      item?.message
-                     }
-                      </p>
-    
-                      {item?.createdAt ? formatDistanceToNow(new Date(item?.createdAt), { addSuffix: true }) : "N/A"}
-
-                    </Link>
-                  </li>
-                  )
-                })
-              }
-             
-             
-           
+              {sortedNotifications?.map((notify) => renderNotification(notify))}
             </ul>
           </div>
         )}

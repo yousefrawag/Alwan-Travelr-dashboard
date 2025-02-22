@@ -28,11 +28,11 @@ const GetCustomers = () => {
       const filters = [
         {
           value: "name",
-          name: "الإسم الإول "
+          name: "الإسم  "
         },
         {
-          value: "secoundName",
-          name: " إسم العائلة"
+          value: "email",
+          name: " البريد الالكترونى "
         },
         {
           value: "phoneNumber",
@@ -88,7 +88,7 @@ const GetCustomers = () => {
 
     const columns = [
         {
-          name: "الإسم الإول",
+          name: "الإسم ",
           selector: (row) => row.name,
           cell: (row) => <div   
           style={{
@@ -101,9 +101,14 @@ const GetCustomers = () => {
     
         },
         {
-          name: " إسم العائلة ",
-          selector: (row) => row.secoundName ,
+          name: "البريد الالكترونى",
+          selector: (row) => row.email ,
+          cell: (row) => <div   
+      className='w-full p-x-3 text-wrap'
+         >{ row.email}</div>,
+    
         },
+        
         {
           name: "الجوال",
           selector: (row) => row.phoneNumber ,

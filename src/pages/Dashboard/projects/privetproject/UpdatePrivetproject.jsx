@@ -43,12 +43,12 @@ const UpdatePrivetproject = () => {
           formData.append("files" , item)
         })
     if(!data.name){
-      toast.error("يجب إضافه اسم المشروع")
+      toast.error("يجب إضافه اسم الخدمة")
         return ;
     }
 
   if(!data.projectRequire){
-    toast.error("يجب إضافه  متطلبات  المشروع")
+    toast.error("يجب إضافه  متطلبات  الخدمة")
     return ;
   }
 
@@ -61,7 +61,7 @@ const UpdatePrivetproject = () => {
                 e.target.reset()
                 setDocs([])
                 setimages_video([])
-                toast.success("تم إضافه مشروع خاص جديد")
+                toast.success("تم إضافه خدمة خاص جديد")
                 navigate("/privte-projects")
             },  
              onError: (error) => {
@@ -87,7 +87,7 @@ const UpdatePrivetproject = () => {
       <div className="icon p-2 bg-main rounded-full">
         <FaRegPenToSquare />
       </div>
-      <p className="font-semibold text-lg">ادخل بيانات المشروع</p>
+      <p className="font-semibold text-lg">ادخل بيانات الخدمة</p>
     </div>
    
    <div className='main-section w-full max-h-[400px] min-h-[100px] p-4 overflow-auto	'>
@@ -96,7 +96,7 @@ const UpdatePrivetproject = () => {
                             htmlFor="name"
                             className="w-full text-lg font-medium text-black dark:text-white"
                         >
-                            إسم المشروع
+                            إسم الخدمة
                         </label>
                         <input
                             type="text"
@@ -112,7 +112,7 @@ const UpdatePrivetproject = () => {
                             htmlFor="projectRequire"
                             className="w-full text-lg font-medium text-black dark:text-white"
                         >
-                           متطلبات المشروع
+                           متطلبات الخدمة
                         </label>
                         <textarea  defaultValue={CurrentItem?.projectRequire} name='projectRequire'  className="focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary text-main p-3 w-full  outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500" >
 
@@ -126,7 +126,7 @@ const UpdatePrivetproject = () => {
 
                             className="w-full text-lg font-medium text-black dark:text-white"
                         >
-                           ملاحظات المشروع
+                           ملاحظات الخدمة
                         </label>
                         <textarea   defaultValue={CurrentItem?.notes} name='notes'  className="focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary text-main p-3 w-full  outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500" >
 

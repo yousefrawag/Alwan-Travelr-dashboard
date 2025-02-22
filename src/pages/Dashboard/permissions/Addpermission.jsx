@@ -83,6 +83,7 @@ const Addpermission = () => {
       { id: 5, key: "Clients", validity: "العملاء" },
       { id: 6, key: "Employees", validity: "المستخدمين" },
       { id: 8, key: "Administration", validity: "صلاحيات" },
+      { id: 8, key: "Section", validity: "الإقسام" },
       { id: 81, key: "Admin", validity: "لوحه تحكم" },
       { id: 9, key: "Services", validity: "خدمات الموقع" },
       { id: 11, key: "visa", validity: "تأشيرات الموقع" },

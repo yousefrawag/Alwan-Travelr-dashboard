@@ -97,23 +97,26 @@ return isauthencated
         <nav className="mt-5 py-4 px-4 lg:mt-4 lg:px-6">
           <div>
             <ul className="mb-6 flex flex-col gap-1.5">
-              <li>
+            {
+     isAdmin || HasPermission("canViewClients") ? 
+     <li>
+ 
                 <NavLink
-                  to="/"
-                  className={`${liststyle} ${pathname === '/' && itemstyle}`}
+                  to="/cutomers"
+                  className={`${liststyle} ${pathname.includes('cutomers') && itemstyle}`}
                 >
-                  <FaTasks className="text-lg" /> مهامي
+                  <FaUsers className="text-lg" /> العملاء
                 </NavLink>
-              </li>
-
-        
-{
+ </li> : null
+     
+  }
+  {
 isAdmin || HasPermission("canViewProjects") ?     <li>
 <NavLink
   to="/projects-main"
   className={`${liststyle} ${pathname.includes('projects-main') && itemstyle}`}
 >
-  <FaProjectDiagram className="text-lg" /> المشاريع العامة
+  <FaProjectDiagram className="text-lg" /> الخدمات العامة
 </NavLink>
 </li> :null
 }
@@ -125,10 +128,21 @@ isAdmin || HasPermission("canViewProjects") ?     <li>
     to="/privte-projects"
     className={`${liststyle} ${pathname.includes('privte-projects') && itemstyle}`}
   >
-    <FaProjectDiagram className="text-lg" /> المشاريع الخاصة
+    <FaProjectDiagram className="text-lg" /> الخدمات الخاصة
   </NavLink>
 </li> :null
 }
+              <li>
+                <NavLink
+                  to="/"
+                  className={`${liststyle} ${pathname === '/' && itemstyle}`}
+                >
+                  <FaTasks className="text-lg" /> مهامي
+                </NavLink>
+              </li>
+ 
+        
+
            
 {
   isAdmin || HasPermission("canViewMissions") ?       <li>
@@ -154,30 +168,8 @@ isAdmin || HasPermission("canViewProjects") ?     <li>
  </li>:null
 }
            
-{
-     isAdmin || HasPermission("canViewclander") ? 
-     <li>
-     <NavLink
-       to="/calendar"
-       className={`${liststyle} ${pathname === '/calendar' && itemstyle}`}
-     >
-       <FaCalendarAlt className="text-lg" /> التقويم
-     </NavLink>
-   </li>:null
-}
-{
-     isAdmin || HasPermission("canViewClients") ? 
-     <li>
- 
-                <NavLink
-                  to="/cutomers"
-                  className={`${liststyle} ${pathname.includes('cutomers') && itemstyle}`}
-                >
-                  <FaUsers className="text-lg" /> العملاء
-                </NavLink>
- </li> : null
-     
-  }
+
+
   {
     isAdmin || HasPermission("canViewAdmin") ? 
     <>
@@ -201,12 +193,12 @@ isAdmin || HasPermission("canViewProjects") ?     <li>
                 to="/All-users"
                 className={`${liststyle} ${pathname.includes('All-users') && itemstyle}`}
               >
-                <FaUsers className="text-lg" /> جميع المستخدمين
+                <FaUsers className="text-lg" /> جميع الموظفين
               </NavLink>
             </li> : null
           }
                {
-              isAdmin || HasPermission("canViewSections") ? 
+              isAdmin || HasPermission("canViewSection") ? 
               <li>
               <NavLink
                 to="/Sections"

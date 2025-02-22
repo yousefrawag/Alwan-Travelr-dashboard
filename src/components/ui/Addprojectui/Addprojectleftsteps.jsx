@@ -13,8 +13,8 @@ const Addprojectleftsteps = () => {
               <div className="absolute left-1/2 top-full border-dotted border-t border-gray-300 w-full"></div>
             </div>
             <div className="text">
-              <p className="font-semibold text-sm">بيانات المشروع</p>
-              <p className="text-gray-500 text-xs">ادخل تفاصيل المشروع - الاسم - القسم </p>
+              <p className="font-semibold text-sm">بيانات الخدمة</p>
+              <p className="text-gray-500 text-xs">ادخل تفاصيل الخدمة - الاسم - القسم </p>
             </div>
           </div>
           <div className="Project_completion_stage flex gap-4">
@@ -33,7 +33,7 @@ const Addprojectleftsteps = () => {
             </div>
             <div className="text">
               <p className="font-semibold text-sm">مرفقات</p>
-              <p className="text-gray-500 text-xs">ادخال مرفقات المشروع</p>
+              <p className="text-gray-500 text-xs">ادخال مرفقات الخدمة</p>
             </div>
           </div>
         </div>

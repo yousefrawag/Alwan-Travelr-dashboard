@@ -88,26 +88,14 @@ const GetReports = () => {
 
 
     const columns = [
-        {
-          name: "عنوان المهمة",
-          selector: (row) => row.title,
-          cell: (row) => <div   
-          style={{
-           
-           whiteSpace: "wrap",
         
-    
-         }}
-        >{ row.title}</div>,
-    
-        },
         {
-          name: "نوع المشروع",
+          name: "نوع الخدمة",
           selector: (row) => row?.missionType ,
         },
         {
-          name: "المشروع",
-          selector: (row) =>  row?.missionType === "مشروع عام" ? row?.project?.name : row?.Privetproject?.name,
+          name: "الخدمة",
+          selector: (row) =>  row?.missionType === "خدمة عامة" ? row?.project?.name : row?.Privetproject?.name,
           cell: (row) => <div   
           style={{
            
@@ -115,7 +103,20 @@ const GetReports = () => {
         
     
          }}
-         >{ row?.missionType === "مشروع عام" ? row?.project?.name : row?.Privetproject?.name}</div>,
+         >{ row?.missionType === "خدمة عامة" ? row?.project?.name : row?.Privetproject?.name}</div>,
+        },
+        {
+          name: "القسم",
+          selector: (row) => row.project?.section?.name ,
+          cell: (row) => <div   
+          style={{
+           
+           whiteSpace: "wrap",
+        
+    
+         }}
+        >{  row.project?.section?.name || "خدمه مخصصة"}</div>,
+    
         },
 
         {

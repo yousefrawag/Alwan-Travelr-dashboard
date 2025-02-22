@@ -16,50 +16,85 @@ const ECommerce = () => {
   const missionStats = data?.data?.missionStats
   const generalStats = data?.data?.generalStats
   const topUsers = data?.data?.topUsers || []
+  const TotalClientSections = data?.data?.sectionCustomerCounts
+  const financialStats = data?.data?.financialStats
+  const complated = "مكتملة"
+  const Inproses = "فى تقدم"
+  const closed = "ملغية"
+  const formatNumber = (num) => {
+    if (!num) return "0.00"; // Show 0.00 if no value
+  
+    if (num >= 1000) {
+      return (num / 1000).toFixed(1) + "K"; // Convert 2000 -> 2.0K
+    }
+  
+    return num.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  };
+  
   if(isLoading){
     return <Loader />
   }
   return (
     <>
  <div className='w-full h-full grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-3 gap-4'>
-                 <CardDataStats title="إجمالى المهام" total={missionStats?.totalMissions} >
+          
+                 <CardDataStats title="إجمالى المهام" to={"/Taskes"} total={missionStats?.totalMissions} >
                  <GrTask />
 
                  </CardDataStats>
-                 <CardDataStats title="مهام متكملة" levelUp total={missionStats?.completedTasks}  >
+                 <CardDataStats title="مهام متكملة" to={`/Taskes-status/${complated}`} levelUp total={missionStats?.completedTasks}  >
                  <FaCheckCircle className="text-green-500" />
 
                 </CardDataStats>
-                <CardDataStats title="فى تقدم" levelUp total={missionStats?.inProgressTasks}  >
+                <CardDataStats title="فى تقدم" levelUp  to={`/Taskes-status/${Inproses}`} total={missionStats?.inProgressTasks}  >
                 <FaSpinner className="text-blue-500 animate-spin" />
                 </CardDataStats>
-                <CardDataStats title="ملغية" total={missionStats?.closedTasks}  >
+                <CardDataStats title="ملغية" total={missionStats?.closedTasks} to={`/Taskes-status/${closed}`}  >
                 <FaTimesCircle className="text-red-500" />
                 </CardDataStats>
-                <CardDataStats title="إجمالى العملاء" total={generalStats?.totalCustomers}  >
+                <CardDataStats title="إجمالى العملاء" total={generalStats?.totalCustomers}  to={`/cutomers`} >
                 <FaUsers className="text-green-500" />
                 </CardDataStats>
-                <CardDataStats title="إجمالى الموظفين" total={generalStats?.totalEmployees}  >
+                <CardDataStats title="إجمالى الموظفين" to={`/All-users/employee`} total={generalStats?.totalEmployees}  >
                 <FaUsers className="text-green-500" />
                 </CardDataStats>
-                <CardDataStats title="إجمالى الإدمن" total={generalStats?.totalAdmins}  >
+                <CardDataStats title="إجمالى الإدمن" to={`/All-users/admin`} total={generalStats?.totalAdmins}  >
                 <FaUsers className="text-green-500" />
                 </CardDataStats>
-                <CardDataStats title="إجمالى المشاريع العامة" total={generalStats?.totlaProjects}  >
+                <CardDataStats title="إجمالى الخدمات العامة"  to={`/privte-projects`}   total={generalStats?.totlaProjects}  >
                 <FaUsers className="text-green-500" />
                 </CardDataStats>
-                <CardDataStats title="إجمالى المشاريع الخاصة" total={generalStats?.totalPrivetproject}  >
+                <CardDataStats title="إجمالى الخدمات الخاصة" to={`/projects-main`}  total={generalStats?.totalPrivetproject}  >
                 <FaUsers className="text-green-500" />
                 </CardDataStats>
-                <CardDataStats title="إجمالى  رسائل الموقع" total="3" >
+                <CardDataStats title="إجمالى  رسائل الموقع" to={`/website-Messages`}  total="3" >
                 <FaUsers className="text-green-500" />
                 </CardDataStats>
-                <CardDataStats title="إجمالى خدمات الشركه" total={generalStats?.totalServices}  >
+                <CardDataStats title="إجمالى خدمات الشركه" to={`/website-Services`}  total={generalStats?.totalServices}  >
                 <FaUsers className="text-green-500" />
                 </CardDataStats>
-                <CardDataStats title="إجمالى التأشيرات" total={generalStats?.totalVisa}   >
+                <CardDataStats title="إجمالى التأشيرات" to={`/website-Visa`}  total={generalStats?.totalVisa}   >
                 <FaUsers className="text-green-500" />
                 </CardDataStats>
+                <CardDataStats title="إجمالى الرصيد"  total={formatNumber(financialStats?.totalSum) } >
+                 <GrTask />
+
+                 </CardDataStats>
+                 <CardDataStats title="إجمالى الرصيد المتاح"  total={formatNumber (financialStats?.totalArrivedCash)} >
+                 <GrTask />
+
+                 </CardDataStats>
+                 <CardDataStats title="إجمالى الرصيد المتبقى"  total={formatNumber(financialStats?.totalInProgressCash) } >
+                 <GrTask />
+
+                 </CardDataStats>
+                {
+TotalClientSections?.map((item) => {
+  return  <CardDataStats title={`إجمالى عملاء ${item?.sectionName}`} to={`/Section-Client/${item?.sectionId}`}  total={item?.customerCount}   >
+  <FaUsers className="text-green-500" />
+  </CardDataStats>
+})
+                }
         </div>
 
       <div className="mt-4 w-full">

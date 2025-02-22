@@ -18,14 +18,14 @@ const GetPrivetprojectByid = () => {
   }
   return (
     <div className='w-full h-full'>
-    <HeadPagestyle pageName="بيانات المشروع" to="/privte-projects" title="عوده" />
+    <HeadPagestyle pageName="بيانات الخدمة" to="/privte-projects" title="عوده" />
 <div className='w-full h-full grid grid-cols-1 gap-2 xl:grid-cols-2	 shadow-md p-5	'>
            <div className="mb-6 flex flex-col  gap-2">
              <span
                htmlFor="name"
                className="w-full text-lg font-medium text-gray-700 dark:text-white"
              >
-                    إسم المشروع
+                    إسم الخدمة
              </span>
              <p className=" dark:border-form-strokedark dark:bg-form-input  text-main p-3 w-full  outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500"
             
@@ -43,7 +43,7 @@ const GetPrivetprojectByid = () => {
                htmlFor="name"
                className="w-full text-lg font-medium text-gray-700 dark:text-white"
              >
-              متطلبات المشروع
+              متطلبات الخدمة
              </span>
              <p className=" dark:border-form-strokedark dark:bg-form-input  text-main p-3 w-full  outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500"
             
@@ -59,7 +59,7 @@ const GetPrivetprojectByid = () => {
                htmlFor="name"
                className="w-full text-lg font-medium text-gray-700 dark:text-white"
              >
-             ملاحظات المشروع
+             ملاحظات الخدمة
              </span>
              <p className=" dark:border-form-strokedark dark:bg-form-input  text-main p-3 w-full  outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500"
             
@@ -74,7 +74,7 @@ const GetPrivetprojectByid = () => {
       
  </div>
  <br />
-    <h2 className='mb-10 mt-5'>مرفقات المشروع</h2>
+    <h2 className='mb-10 mt-5'>مرفقات الخدمة</h2>
      <div className='w-full h-full grid grid-cols-1 gap-2 xl:grid-cols-2'>
       {
         CurrentItem?.imagesURLs?.map((item) => {

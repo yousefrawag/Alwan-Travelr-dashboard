@@ -20,7 +20,19 @@ const SelectoptionHook = ({fectParentKEY  , keyName , title , value , setvalue ,
                   ) : (
                       data?.data?.data?.map((item) => (
                           <option key={item._id} value={item._id}>
-                              {item.name}
+                        {
+                        keyName === "customers" ? (
+                          <p className="w-full flex gap-4">
+                            <span>{item.name}</span>
+                            {' - '}
+                            <span>{item.phoneNumber}</span>
+                          </p>
+                        ) : (
+                          item.name
+                        )
+                    }
+
+                             
                           </option>
                       ))
                   )}

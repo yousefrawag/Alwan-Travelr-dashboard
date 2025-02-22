@@ -26,7 +26,7 @@ const UpdateTaske = () => {
     const [search, setSearch] = useState(""); // Search input state
     const [users , setUsers] = useState([])
     const [missionStauts , setMissionStauts] = useState("")
-      const [Section , setSection] = useState("")
+     
  
     const navigate = useNavigate();
 
@@ -54,8 +54,8 @@ const UpdateTaske = () => {
             setSelectedUsers(CurrenTask?.assignedTo?.map((item) => item?._id));
             setRequirements(CurrenTask?.requirements || []); // Ensure default is an empty array
             setMissionStauts(CurrenTask?.status)
-            setSection(CurrenTask?.section?._id)
-            if (CurrenTask.missionType === "مشروع عام") {
+           
+            if (CurrenTask.missionType === "خدمة عامة") {
                 setProject(CurrenTask?.project?._id);
             } else {
                 setPrivetProject(CurrenTask?.Privetproject?._id);
@@ -71,24 +71,21 @@ const handleSubmit = (e) => {
         data.assignedTo = selectedUsers
         data.missionType = missionType
        
-        if (missionType === "مشروع عام") {
+        if (missionType === "خدمة عامة") {
             if(!project) {
                 return toast.error("يجب إضافة مشروع عام")
             }
             data.project = project; // Set public project
 
             data.Privetproject = null; // Ensure Privetproject is null for public projects
-        } else if (missionType === "مشروع خاص") {
+        } else if (missionType === "خدمة مخصصة") {
             if(!privetProject) {
-                return toast.error("يجب إضافة مشروع خاص")
+                return toast.error("يجب إضافة  خدمة مخصصة")
             }
             data.Privetproject = privetProject; // Set private project
             data.project = null; // Ensure project is null for private projects
         }
-        if (!data?.title) {
-            toast.error("يجب إضافه  عنوان المهمة");
-            return;
-        }
+       
         if (!data?.deadline) {
             toast.error("يجب إضافه موعد التسليم");
             return;
@@ -136,18 +133,7 @@ console.log(data)
             </div>
 
             <div className='main-section w-full max-h-[400px] min-h-[100px] p-4 overflow-auto'>
-                <div className="mb-6 flex flex-col gap-2">
-                    <label htmlFor="title" className="w-full text-lg font-medium text-black dark:text-white">
-                        عنوان المهمة
-                    </label>
-                    <input
-                        type="text"
-                        id="title"
-                        name="title"
-                        defaultValue={CurrenTask?.title}
-                        className="focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary text-main p-3 w-full outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500"
-                    />
-                </div>
+             
 
                 <div className='w-full flex gap-2'>
                     {types.map((item) => (
@@ -162,11 +148,11 @@ console.log(data)
                     ))}
                 </div>
 
-                {missionType === "مشروع عام" ? (
+                {missionType === "خدمة عامة" ? (
                     <SelectoptionHook
                         fectParentKEY="projects"
                         keyName="projects"
-                        title="مشروع عام"
+                        title="خدمة عامة"
                         value={project}
                         setvalue={setProject}
                     />
@@ -174,7 +160,7 @@ console.log(data)
                     <SelectoptionHook
                         fectParentKEY="Privetprojects"
                         keyName="Privetprojects"
-                        title="مشروع خاص"
+                        title="خدمة مخصصة"
                         value={privetProject}
                         setvalue={setPrivetProject}
                     />
@@ -232,24 +218,7 @@ console.log(data)
                      
                     
                 </div>
-                <div className="mb-6 flex flex-col gap-2">
-                    <label htmlFor="deadline" className="w-full text-lg font-medium text-black dark:text-white">
-                        إختار القسم
-                    </label>
-                  <select 
-                  name='section' 
-                  value={Section}
-                  onChange={(e) => setSection(e.target.value)}
-                  className="mb-2 focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary text-main p-3 w-full outline-0 rounded-md border border-gray-300 shadow-sm focus:ring-blue-500"
-                  >
-                    <option value="">قم بالاختيار</option>
-                    {
-                        Sections?.data?.map((item) => {
-                            return <option key={item?._id} value={item?._id}>{item?.name}</option>
-                        })
-                    }
-                  </select>
-                </div>
+              
                 <div className="mb-6 flex flex-col gap-2">
                     <label htmlFor="deadline" className="w-full text-lg font-medium text-black dark:text-white">
                         موعد التسليم المنتظر

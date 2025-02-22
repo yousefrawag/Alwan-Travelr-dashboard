@@ -28,11 +28,11 @@ const GetprivetProject = () => {
       const filters = [
         {
           value: "name",
-          name: " إسم المشروع "
+          name: " إسم الخدمة "
         },
         {
           value: "projectRequire",
-          name: " متطلبات المشروع"
+          name: " متطلبات الخدمة"
         },
         {
           value: "addedBy.name",
@@ -58,7 +58,7 @@ const GetprivetProject = () => {
 
 const columns = [
   {
-    name: "اسم مشروع",
+    name: "اسم الخدمة",
     selector: (row) => row.name,
     cell: (row) => <div   
     style={{
@@ -72,7 +72,7 @@ const columns = [
   },
 
   {
-    name: "متطلبات المشروع",
+    name: "متطلبات الخدمة",
     selector: (row) =>  row.projectRequire,
     cell: (row) => <div   
     style={{
@@ -129,8 +129,8 @@ const columns = [
  }    
   return (
     <div>
-        <HeadPagestyle isAdmin={isAdmin} CanAdd={CanAdd}  pageName="مشاريع خاصة" to="/Add-privte-projects" title="إضافة مشروع"/>
-       <FiltertionHook filteredData={filteredData} columns={columns} key="المشاريع الخاصة.xlsx" filters={filters} params={params} setParams={setParams}/>
+        <HeadPagestyle isAdmin={isAdmin} CanAdd={CanAdd}  pageName="خدمات مخصصة" to="/Add-privte-projects" title="إضافة خدمة"/>
+       <FiltertionHook filteredData={filteredData} columns={columns} filters={filters} params={params} setParams={setParams}/>
         <CustomeTabel  data={filteredData} columns={columns}/>
     </div>
   )
