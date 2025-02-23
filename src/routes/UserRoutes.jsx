@@ -1,4 +1,4 @@
-import { Getusers , Adduser , Updateuser , UsersStatus} from "../pages";
+import { Getusers , Adduser , Updateuser , UsersStatus , GetuserByid} from "../pages";
 import store from "../store/index"
 import Checkuserautherzationview from "../middleware/Checkuserautherzationview";  
   export const UserRoutes = [
@@ -7,5 +7,6 @@ import Checkuserautherzationview from "../middleware/Checkuserautherzationview";
       { path: "/edtit-user/:id", element: <Updateuser /> , loader:Checkuserautherzationview(store , "canEditEmployees")  },
       { path: "/All-users/:type", element: <UsersStatus /> , loader:Checkuserautherzationview(store , "canViewEmployees")  },
    
-  
+      { path: "/All-users-overview/:id", element: <GetuserByid /> ,  loader:Checkuserautherzationview(store , "canViewEmployees")},
+
     ];

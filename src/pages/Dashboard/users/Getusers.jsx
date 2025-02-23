@@ -137,6 +137,9 @@ const Getusers = () => {
            
             
             <div className="flex items-center justify-center space-x-3.5">
+                <Link to={`/All-users-overview/${row._id}`} className="hover:text-primary">
+            <GrFormView size={20} />
+            </Link>
           {
             isAdmin || CanEdit ? 
             <Link to={`/edtit-user/${row._id}`}  className="hover:text-primary">

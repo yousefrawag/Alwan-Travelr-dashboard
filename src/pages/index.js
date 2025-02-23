@@ -41,6 +41,7 @@ import UpdateSection from "./Dashboard/Sections/UpdateSection";
 import TaskwithSatuts from "./Dashboard/Taskes/TaskwithSatuts";
 import UsersStatus from "./Dashboard/users/UsersStatus";
 import SectionClients from "./Dashboard/Customer/SectionClients";
+import GetuserByid from "./Dashboard/users/GetuserByid";
 export {
     UserTaskes ,
     Getprojects,
@@ -84,6 +85,7 @@ export {
     UpdateSection ,
     TaskwithSatuts ,
     UsersStatus ,
-    SectionClients
+    SectionClients ,
+    GetuserByid
 
 }
