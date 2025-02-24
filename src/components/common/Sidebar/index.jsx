@@ -160,8 +160,8 @@ isAdmin || HasPermission("canViewProjects") ?     <li>
    isAdmin || HasPermission("canViewReports") ? 
    <li>
    <NavLink
-     to="/missions-repoart"
-     className={`${liststyle} ${pathname === '/missions-repoart' && itemstyle}`}
+     to="/Repoarts-Boarding"
+     className={`${liststyle} ${pathname === '/Repoarts-Boarding' && itemstyle}`}
    >
      <FaChartLine className="text-lg" /> التقارير والتواصل
    </NavLink>

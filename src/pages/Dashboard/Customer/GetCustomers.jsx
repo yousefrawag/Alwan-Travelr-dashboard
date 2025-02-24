@@ -40,7 +40,7 @@ const GetCustomers = () => {
         },
         {
           value: "addBy.name",
-          name: " المسوق "
+          name: " إنشاء بواسطة "
         },
         {
           value: "Section",
@@ -175,7 +175,7 @@ const GetCustomers = () => {
             cell:(row) => <span style={{color: "red " }}>{row.inprocessCashe}</span>
           },
         {
-          name: " المسوق ",
+          name: " إنشاء بواسطة ",
           selector: (row) => <span className='text-wrap'>{row?.addBy?.name}</span> ,
         },
         {

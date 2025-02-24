@@ -1,4 +1,4 @@
-import { UserTaskes  , GetTaskes , TaskwithSatuts ,  AddTask , UpdateTaske , GetReports , TaskOverview , ReportChat} from "../pages";
+import { UserTaskes  , GetTaskes ,CutsomerRepoarts , TaskwithSatuts ,BoardingReports ,  AddTask , UpdateTaske , GetReports , TaskOverview , ReportChat} from "../pages";
 import store from "../store/index"
 import Checkuserautherzationview from "../middleware/Checkuserautherzationview";  
 export const TaskesRoutes = [
@@ -10,5 +10,7 @@ export const TaskesRoutes = [
       { path: "/Taskes/:id", element: <TaskOverview /> ,  loader:Checkuserautherzationview(store , "canViewMissions")},
       { path: "/Taskes-status/:status", element: <TaskwithSatuts />  },
       { path: "/team-chat/:missionid/:chatid", element: <ReportChat /> },
+      { path: "/Repoarts-Boarding", element: <BoardingReports /> },
+      { path: "/cutomer-reports", element: <CutsomerRepoarts /> },
   
     ];

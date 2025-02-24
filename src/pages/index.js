@@ -42,6 +42,8 @@ import TaskwithSatuts from "./Dashboard/Taskes/TaskwithSatuts";
 import UsersStatus from "./Dashboard/users/UsersStatus";
 import SectionClients from "./Dashboard/Customer/SectionClients";
 import GetuserByid from "./Dashboard/users/GetuserByid";
+import BoardingReports from "./Dashboard/Reports/BoardingReports";
+import CutsomerRepoarts from "./Dashboard/Reports/CutsomerRepoarts";
 export {
     UserTaskes ,
     Getprojects,
@@ -86,6 +88,8 @@ export {
     TaskwithSatuts ,
     UsersStatus ,
     SectionClients ,
-    GetuserByid
+    GetuserByid ,
+    BoardingReports ,
+    CutsomerRepoarts
 
 }
